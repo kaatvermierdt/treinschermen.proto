@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Treinscherm Leuven — 6 wagons</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:wght@300;400;600;700&family=Julius+Sans+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+  <style>
+    :root{
+      --bg:#0b1220;
+      --card:#07111b;
+      --accent:#9EFA1E;
+      --text:#ffffff;
+      --muted:#aab7c7;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{
+      height:100%;
+      width:100%;
+      background:var(--bg);
+      font-family:"Inria Sans",sans-serif;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      overflow:hidden;
+    }
+
+    /* aspect ratio container */
+    .screen-wrapper{
+      position:relative;
+      width:100vw;
+      height:auto;
+      aspect-ratio:3851.85 / 2166.66;
+      max-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    .screen{
+      width:100%;
+      height:100%;
+      background:linear-gradient(180deg,#06101a 0%,#07111b 100%);
+      color:var(--text);
+      padding:calc(3vw + 2vh);
+      border-radius:1vw;
+      box-shadow:0 1vw 3vw rgba(2,6,12,0.6);
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+
+    /* header */
+    .header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:3vh;
+    }
+
+    .title{
+      font-family:"Julius Sans One",sans-serif;
+      font-size:clamp(3rem,4.5vw,8rem);
+      letter-spacing:0.04em;
+      text-transform:uppercase;
+    }
+
+    .clock{
+      font-weight:700;
+      font-size:clamp(2rem,3vw,6rem);
+      color:var(--muted);
+      background:rgba(255,255,255,0.05);
+      padding:0.8vw 1.4vw;
+      border-radius:0.8vw;
+    }
+
+    /* train / wagons */
+    .train{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:2vw;
+      margin-top:2vh;
+      flex-wrap:wrap;
+    }
+
+    .wagon{
+      background:rgba(255,255,255,0.05);
+      border:0.18vw solid rgba(255,255,255,0.08);
+      width:clamp(8rem,12vw,22rem);
+      height:clamp(7rem,10vw,18rem);
+      border-radius:1vw;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      transition:transform .18s ease;
+      box-shadow:0 0.15vw 0.5vw rgba(0,0,0,0.35) inset;
+    }
+
+    .wagon:hover{ transform:translateY(-0.5vh); }
+
+    /* rounded front for first wagon (train nose) */
+    .wagon:first-child{
+      border-top-left-radius:6vw;
+      border-bottom-left-radius:6vw;
+      background:linear-gradient(90deg,rgba(158,250,30,0.25),rgba(255,255,255,0.05));
+    }
+
+    /* last wagon slightly rounded on right */
+    .wagon:last-child{
+      border-top-right-radius:1.5vw;
+      border-bottom-right-radius:1.5vw;
+    }
+
+    /* first-class badge */
+    .badge-1e{
+      position:absolute;
+      top:0.6vw;
+      left:0.8vw;
+      background:var(--accent);
+      color:#03110a;
+      font-weight:700;
+      font-size:clamp(0.7rem,0.9vw,1.4rem);
+      padding:0.35vw 0.7vw;
+      border-radius:0.6vw;
+      box-shadow:0 0.2vw 0.6vw rgba(0,0,0,0.4);
+      transform:translateY(-10%);
+    }
+
+    .wagon .material-symbols-outlined{
+      font-size:clamp(3.5rem,5vw,8rem);
+      color:var(--accent);
+    }
+
+    .wagon small{
+      margin-top:0.6vw;
+      font-size:clamp(1.2rem,1.6vw,3rem);
+      color:var(--muted);
+    }
+
+    /* route */
+    .route{
+      margin-top:4vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:1.8vw;
+      flex-wrap:wrap;
+      font-size:clamp(1.2rem,1.6vw,3rem);
+      color:var(--muted);
+    }
+
+    .route span{
+      display:flex;
+      align-items:center;
+      gap:0.6vw;
+    }
+
+    .route .current{
+      color:var(--accent);
+      font-weight:700;
+    }
+
+    .dot{
+      width:1vw;
+      height:1vw;
+      border-radius:50%;
+      background:var(--muted);
+    }
+
+    .current .dot{ background:var(--accent); }
+
+    /* footer: weather */
+    .footer{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:1.4vw;
+      margin-top:3vh;
+      font-size:clamp(1.2rem,2vw,3.5rem);
+    }
+
+    .footer .material-symbols-outlined{
+      font-size:clamp(2.5rem,3vw,5rem);
+      color:var(--accent);
+    }
+
+    #weather-desc{ color:var(--muted); font-size:clamp(1.1rem,1.6vw,2.5rem); }
+
+    /* responsive small screens */
+    @media (max-width:1000px){
+      .train{gap:3vw}
+      .wagon{width:28vw;height:24vw}
+      .wagon span{font-size:10vw}
+      .route{font-size:3vw}
+      .badge-1e{font-size:3vw;padding:0.6vw 1.2vw}
+    }
+  </style>
+</head>
+<body>
+  <div class="screen-wrapper">
+    <div class="screen">
+      <div class="header">
+        <h1 class="title">LEUVEN — Perron 3</h1>
+        <div class="clock" id="clock">--:--</div>
+      </div>
+
+      <div class="train" aria-hidden="false">
+        <!-- Wagon 1: Eerste klas + toegankelijk -->
+        <div class="wagon" role="group" aria-label="Wagon A - Eerste klas toegankelijk">
+          <div class="badge-1e">1e klas</div>
+          <span class="material-symbols-outlined" aria-hidden="true">wheelchair_pickup</span>
+          <small>Toegankelijk</small>
+        </div>
+
+        <!-- Wagon 2: WC -->
+        <div class="wagon" role="group" aria-label="Wagon B - WC">
+          <span class="material-symbols-outlined" aria-hidden="true">wc</span>
+          <small>WC</small>
+        </div>
+
+        <!-- Wagon 3: WC -->
+        <div class="wagon" role="group" aria-label="Wagon C - WC">
+          <span class="material-symbols-outlined" aria-hidden="true">wc</span>
+          <small>WC</small>
+        </div>
+
+        <!-- Wagon 4: Fiets -->
+        <div class="wagon" role="group" aria-label="Wagon D - Fiets">
+          <span class="material-symbols-outlined" aria-hidden="true">pedal_bike</span>
+          <small>Fiets</small>
+        </div>
+
+        <!-- Wagon 5: Stilte -->
+        <div class="wagon" role="group" aria-label="Wagon E - Stilte">
+          <span class="material-symbols-outlined" aria-hidden="true">volume_off</span>
+          <small>Stilte</small>
+        </div>
+
+        <!-- Wagon 6: Passagiers (extra) -->
+        <div class="wagon" role="group" aria-label="Wagon F - Passagiers">
+          <span class="material-symbols-outlined" aria-hidden="true">event_seat</span>
+          <small>Passagiers</small>
+        </div>
+      </div>
+
+      <div class="route" aria-hidden="true">
+        <span class="current"><span class="dot"></span> Leuven</span>
+        <span><span class="dot"></span> Herent</span>
+        <span><span class="dot"></span> Veltem</span>
+        <span><span class="dot"></span> Kortenberg</span>
+        <span><span class="dot"></span> Zaventem</span>
+        <span><span class="dot"></span> Brussel-Noord</span>
+      </div>
+
+      <div class="footer" role="contentinfo" aria-live="polite">
+        <span class="material-symbols-outlined" id="weather-icon">partly_cloudy_day</span>
+        <span id="temp">--°C</span>
+        <span id="weather-desc">Laden...</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // klok
+    function updateClock(){
+      const el=document.getElementById('clock');
+      const now=new Date();
+      const hh=String(now.getHours()).padStart(2,'0');
+      const mm=String(now.getMinutes()).padStart(2,'0');
+      el.textContent=`${hh}:${mm}`;
+    }
+    updateClock();
+    setInterval(updateClock,1000);
+
+    // weer ophalen (Open-Meteo, Leuven)
+    async function fetchWeather(){
+      try{
+        const res=await fetch('https://api.open-meteo.com/v1/forecast?latitude=50.8796&longitude=4.7009&current=temperature_2m,weather_code');
+        const data=await res.json();
+        const current=data.current || {};
+        const temp=current.temperature_2m;
+        const code=current.weather_code;
+
+        const tempEl=document.getElementById('temp');
+        const iconEl=document.getElementById('weather-icon');
+        const descEl=document.getElementById('weather-desc');
+
+        if(temp!==undefined) tempEl.textContent=`${Math.round(temp)}°C`;
+
+        const map={
+          0:['clear_day','Zonnig'],1:['clear_day','Overwegend zonnig'],2:['partly_cloudy_day','Gedeeltelijk bewolkt'],
+          3:['cloud','Bewolkt'],45:['foggy','Mist'],48:['foggy','Aanvriezende mist'],
+          51:['rainy','Lichte motregen'],53:['rainy','Motregen'],55:['rainy','Zware motregen'],
+          61:['rainy','Lichte regen'],63:['rainy','Regen'],65:['rainy','Zware regen'],
+          71:['weather_snowy','Lichte sneeuw'],73:['weather_snowy','Sneeuw'],75:['weather_snowy','Zware sneeuw'],
+          80:['rainy','Buien'],81:['rainy','Regenbuien'],82:['rainy','Zware buien'],
+          95:['thunderstorm','Onweer'],96:['thunderstorm','Onweer met hagel'],99:['thunderstorm','Hevig onweer']
+        };
+
+        const [icon,desc]=map[code] || ['partly_cloudy_day','Onbekend weer'];
+        iconEl.textContent=icon;
+        descEl.textContent=desc;
+      }catch(err){
+        document.getElementById('weather-desc').textContent='Geen data';
+      }
+    }
+    fetchWeather();
+    setInterval(fetchWeather,600000);
+  </script>
+</body>
+</html>
+

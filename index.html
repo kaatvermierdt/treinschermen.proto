@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Overzichtsscherm — Schermen</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inria+Sans:wght@300;400;600;700&family=Julius+Sans+One&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg:#0b1220;
+      --card:#07111b;
+      --accent:#9EFA1E;       /* neon geelgroen */
+      --text:#ffffff;         /* wit */
+      --muted:#aab7c7;
+      --danger:#ff6b6b;
+      --ok:#61ffb9;
+      --gap:18px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:"Inria Sans",sans-serif}
+    body{
+      background:linear-gradient(180deg,#06101a 0%,#07111b 100%);
+      color:var(--text);
+      padding:28px;
+    }
+
+    .screen{
+      width:100%;
+      max-width:1100px;
+      margin:0 auto;
+      background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(0,0,0,0.06));
+      border-radius:14px;
+      padding:24px;
+      box-shadow:0 10px 30px rgba(2,6,12,0.6);
+      display:grid;
+      grid-template-columns:1fr 360px;
+      gap:var(--gap);
+    }
+
+    .left{padding:12px;}
+    .header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:8px;
+    }
+
+    .title{
+      font-family:"Julius Sans One",sans-serif;
+      font-size:36px;
+      letter-spacing:0.03em;
+      text-transform:uppercase;
+      margin:0;
+    }
+
+    .clock{
+      font-weight:700;
+      font-size:22px;
+      color:var(--muted);
+      background:rgba(255,255,255,0.05);
+      padding:10px 14px;
+      border-radius:10px;
+    }
+
+    .list{display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+
+    .row{
+      display:grid;
+      grid-template-columns:110px 1fr 110px;
+      gap:10px;
+      align-items:center;
+      padding:12px;
+      border-radius:10px;
+      background:rgba(255,255,255,0.03);
+    }
+
+    .time{
+      font-family:"Julius Sans One",sans-serif;
+      font-size:28px;
+      color:var(--text);
+    }
+
+    .dest{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+
+    .dest .main{
+      font-weight:700;
+      font-size:18px;
+      color:var(--accent);
+    }
+
+    .dest .sub{
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .platform{
+      text-align:right;
+      font-size:20px;
+      font-weight:700;
+      color:var(--text);
+    }
+
+    .status{
+      margin-top:6px;
+      font-size:13px;
+      font-weight:600;
+      display:inline-block;
+      padding:4px 8px;
+      border-radius:8px;
+      background:rgba(158,250,30,0.08);
+      color:var(--accent);
+    }
+
+    .right{
+      padding:12px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .mini{
+      background:rgba(255,255,255,0.03);
+      padding:12px;
+      border-radius:10px;
+    }
+
+    .mini h3{
+      margin:0 0 8px 0;
+      font-family:"Julius Sans One",sans-serif;
+      font-size:18px;
+      letter-spacing:0.02em;
+    }
+
+    .mini ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+    .mini li{display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .mini .t{font-weight:700;color:var(--text)}
+    .mini .d{color:var(--accent);font-size:14px}
+
+    @media (max-width:920px){
+      .screen{grid-template-columns:1fr;padding:18px}
+      .header{flex-direction:column;align-items:flex-start;gap:8px}
+      .clock{align-self:stretch;text-align:right}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="screen">
+    <div class="left">
+      <div class="header">
+        <h1 class="title">OVERZICHTSCHERM</h1>
+        <div class="clock" id="clock">10:00</div>
+      </div>
+
+      <div class="list">
+        <article class="row">
+          <div class="time">10:00</div>
+          <div class="dest">
+            <div class="main">Bestemming IC23</div>
+            <div class="sub">Perron 4</div>
+            <div class="status">Op tijd</div>
+          </div>
+          <div class="platform">Perron 4</div>
+        </article>
+
+        <article class="row">
+          <div class="time">10:24</div>
+          <div class="dest">
+            <div class="main">Bestemming IC23</div>
+            <div class="sub">Perron 7</div>
+            <div class="status">Op tijd</div>
+          </div>
+          <div class="platform">Perron 7</div>
+        </article>
+
+        <article class="row">
+          <div class="time">10:40</div>
+          <div class="dest">
+            <div class="main">Bestemming IC23</div>
+            <div class="sub">Perron 12</div>
+            <div class="status">Op tijd</div>
+          </div>
+          <div class="platform">Perron 12</div>
+        </article>
+
+        <article class="row">
+          <div class="time">11:12</div>
+          <div class="dest">
+            <div class="main">Bestemming IC23</div>
+            <div class="sub">Perron 5</div>
+            <div class="status">Op tijd</div>
+          </div>
+          <div class="platform">Perron 5</div>
+        </article>
+
+        <article class="row">
+          <div class="time">11:24</div>
+          <div class="dest">
+            <div class="main">Bestemming IC23</div>
+            <div class="sub">Perron 9</div>
+            <div class="status">Op tijd</div>
+          </div>
+          <div class="platform">Perron 9</div>
+        </article>
+      </div>
+    </div>
+
+    <aside class="right">
+      <div class="mini">
+        <h3>Volgende vertrekken</h3>
+        <ul>
+          <li><span class="t">10:00</span><span class="d">IC23 — Perron 4</span></li>
+          <li><span class="t">10:24</span><span class="d">IC23 — Perron 7</span></li>
+          <li><span class="t">10:40</span><span class="d">IC23 — Perron 12</span></li>
+          <li><span class="t">11:12</span><span class="d">IC23 — Perron 5</span></li>
+          <li><span class="t">11:24</span><span class="d">IC23 — Perron 9</span></li>
+        </ul>
+      </div>
+
+      <div class="mini">
+        <h3>Opmerkingen</h3>
+        <p style="margin:0;color:var(--muted);font-size:14px">
+          Alle treinen IC23 vertrekken volgens schema. <br>
+          Druk op <b>“R”</b> om vertragingen te simuleren.
+        </p>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    // klok
+    function updateClock(){
+      const el=document.getElementById('clock');
+      if(!el)return;
+      const now=new Date();
+      const hh=String(now.getHours()).padStart(2,'0');
+      const mm=String(now.getMinutes()).padStart(2,'0');
+      el.textContent=`${hh}:${mm}`;
+    }
+    updateClock();
+    setInterval(updateClock,1000);
+
+    // toets R = vertraging simuleren
+    document.addEventListener('keydown',e=>{
+      if(e.key.toLowerCase()==='r'){
+        document.querySelectorAll('.status').forEach(s=>{
+          const r=Math.random();
+          if(r<0.15){
+            s.textContent='Vertraagd';
+            s.style.color='var(--accent)';
+            s.style.background='rgba(158,250,30,0.15)';
+          }else{
+            s.textContent='Op tijd';
+            s.style.color='var(--accent)';
+            s.style.background='rgba(158,250,30,0.08)';
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
